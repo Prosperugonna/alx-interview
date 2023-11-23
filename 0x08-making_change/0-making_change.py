@@ -1,20 +1,25 @@
 #!/usr/bin/python3
-"""Change making module.
-"""
+"""making changes Interview Question"""
 
 
 def makeChange(coins, total):
+    """makeChange interview question function"""
     if total <= 0:
         return 0
-
-    # Create an array to store the minimum number of coins required to reach each value
-    min_coins = [float('inf')] * (total + 1)
-    min_coins[0] = 0
-
-    for coin in coins:
-        for i in range(coin, total + 1):
-            # Update the minimum number of coins required for each value
-            min_coins[i] = min(min_coins[i], min_coins[i - coin] + 1)
-
-    # Return the minimum number of coins required to reach the total value
-    return min_coins[total] if min_coins[total] != float('inf') else -1
+    hel = 0
+    number = 0
+    helping = 0
+    holder = total
+    coins = sorted(coins, reverse=True)
+    for m in coins:
+        hel = total // m
+        helping += hel * m
+        number += hel
+        total -= (hel * m)
+        if (helping == holder):
+            return (number)
+        elif (total > holder):
+            return (-1)
+        else:
+            continue
+    return (-1)
