@@ -1,23 +1,26 @@
 #!/usr/bin/python3
-"""Solution to the Island perimter problem"""
+"""Defines island perimeter finding function."""
 
 
 def island_perimeter(grid):
-    """Island perimeter problem"""
-    perimter = 0
-    len1 = len(grid)
-    len2 = len(grid[1])
-    for id1, v1 in enumerate(grid):
-        count = 0
-        for id2, v2 in enumerate(v1):
-            if v2 == 1:
-                if (id2 - 1) < 0 or grid[id1][id2 - 1] == 0:
-                    count += 1
-                if (id2 + 1) == len2 or grid[id1][id2 + 1] == 0:
-                    count += 1
-                if (id1 - 1) < 0 or grid[id1 - 1][id2] == 0:
-                    count += 1
-                if (id1 + 1) == len1 or grid[id1 + 1][id2] == 0:
-                    count += 1
-        perimter += count
-    return (perimter)
+    """Return the perimiter of an island.
+    The grid represents water by 0 and land by 1.
+    Args:
+        grid (list): A list of list of integers representing an island.
+    Returns:
+        The perimeter of the island defined in grid.
+    """
+    width = len(grid[0])
+    height = len(grid)
+    edges = 0
+    size = 0
+
+    for i in range(height):
+        for j in range(width):
+            if grid[i][j] == 1:
+                size += 1
+                if (j > 0 and grid[i][j - 1] == 1):
+                    edges += 1
+                if (i > 0 and grid[i - 1][j] == 1):
+                    edges += 1
+    return size * 4 - edges * 2
