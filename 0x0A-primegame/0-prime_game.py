@@ -1,57 +1,41 @@
 #!/usr/bin/python3
-"""Module defining isWinner function."""
+"""The prime game for winner"""
 
 
 def isWinner(x, nums):
-    """Function to get who has won in prime game"""
-    mariaWinsCount = 0
-    benWinsCount = 0
+    '''The prime game to determine the winner'''
+    import math
 
-    for num in nums:
-        roundsSet = list(range(1, num + 1))
-        primesSet = primes_in_range(1, num)
-
-        if not primesSet:
-            benWinsCount += 1
-            continue
-
-        isMariaTurns = True
-
-        while(True):
-            if not primesSet:
-                if isMariaTurns:
-                    benWinsCount += 1
-                else:
-                    mariaWinsCount += 1
-                break
-
-            smallestPrime = primesSet.pop(0)
-            roundsSet.remove(smallestPrime)
-
-            roundsSet = [x for x in roundsSet if x % smallestPrime != 0]
-
-            isMariaTurns = not isMariaTurns
-
-    if mariaWinsCount > benWinsCount:
-        return "Winner: Maria"
-
-    if mariaWinsCount < benWinsCount:
-        return "Winner: Ben"
-
-    return None
-
-
-def is_prime(n):
-    """Returns True if n is prime, else False."""
-    if n < 2:
-        return False
-    for i in range(2, int(n ** 0.5) + 1):
-        if n % i == 0:
+    def is_prime(n):
+        """check if a number is prime"""
+        if n <= 1:
             return False
-    return True
+        if n == 2:
+            return True
+        if n % 2 == 0:
+            return False
+        val = math.isqrt(n)
+        for d in range(3, val + 1, 2):
+            if n % d == 0:
+                return False
+        return True
 
+    def gen_prime(prime_lis):
+        """genearet prime from a list"""
+        prime = []
+        for val in prime_lis:
+            if is_prime(val):
+                prime.append(val)
+        return prime
 
-def primes_in_range(start, end):
-    """Returns a list of prime numbers between start and end (inclusive)."""
-    primes = [n for n in range(start, end+1) if is_prime(n)]
-    return primes
+    playe = ['X', 'Y']
+    player = {'X': 0,  'Y': 0}
+    for i in range(x):
+        number = nums[i]
+        num_lis = range(1, number)
+        prime = gen_prime(num_lis)
+        number = ((len(prime) + 1) % 2)
+        player[playe[number]] += 1
+    if player['X'] > player['Y']:
+        return "Maria"
+    return "Ben"
